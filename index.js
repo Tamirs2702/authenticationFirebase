@@ -4,6 +4,8 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
+
 AppRegistry.registerComponent(appName, () => App);
 import React from 'react';
 import {
