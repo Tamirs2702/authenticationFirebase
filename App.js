@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createAppContainer} from 'react-navigation';
+import SplashPage from './src/containers/SplashPage';
+import SignUp from './src/containers/Signup';
+import Login from './src/containers/Login';
+import Home from './src/containers/Home';
 
-function App() {
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+const App = createStackNavigator(
+    {
+      SplashPage: {
+        screen: SplashPage,
+        navigationOptions: {
+          header: null,
+        },
+      },
+      SignUp: {
+        screen: SignUp,
+        navigationOptions: {
+          header: null,
+        },
+      },
+      Login: {
+        screen: Login,
+        navigationOptions: {
+          header: null,
+        },
+      },
+      Home: {
+        screen: Home,
+        navigationOptions: {
+          header: null,
+        },
+      },
+    },
+    {
+      initialRouteName: 'SplashPage',
+    },
+);
 
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  if (initializing) return null;
-
-  if (!user) {
-    return (
-        <View>
-          <Text>Login</Text>
-        </View>
-    );
-  }
-
-  return (
-      <View>
-        <Text>Welcome {user.email}</Text>
-      </View>
-  );
-}
+export default createAppContainer(App);
